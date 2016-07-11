@@ -1,0 +1,122 @@
+---
+layout: post
+title: publish blog(org-mode+jekyll)
+date: 2016-07-11
+categories: 
+- blog
+tags: 
+- org-mode
+- jekyll
+- github-pages
+author: sars715
+excerpt: 利用org-mode和org2jekyll在github pages上部署博客
+---
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8">利用org-mode和org2jekyll在github pages上部署博客</h2>
+<div class="outline-text-2" id="text-orgheadline8">
+</div><div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">环境</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+</div><ul class="org-ul"><li><a id="orgheadline1"></a>jekyll<br  /><div class="outline-text-4" id="text-orgheadline1">
+<p>
+本人的环境是mac，在jekyll的<a href="http://jekyll.bootcss.com/">官方网站</a>就介绍了安装方法，命令为 <code>gen install jekyll</code>
+</p>
+</div></li>
+<li><a id="orgheadline2"></a>org2jekyll<br  /><div class="outline-text-4" id="text-orgheadline2">
+<p>
+利用emacs自身的安装工具，执行 <code>M-x package-install RET org2jekyll</code>
+</p>
+</div></li>
+<li><a id="orgheadline3"></a>github pages<br  /><div class="outline-text-4" id="text-orgheadline3">
+<p>
+在github中创建一个pages，具体方法点击<a href="https://pages.github.com/">这里</a>，简单易操作
+</p>
+</div></li></ul>
+</div>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">配置</h3>
+<div class="outline-text-3" id="text-orgheadline6">
+</div><ul class="org-ul"><li><a id="orgheadline5"></a>org2jekyll<br  /><div class="outline-text-4" id="text-orgheadline5">
+<p>
+org2jekyll的<a href="https://github.com/ardumont/org2jekyll">项目主页</a>介绍了配置
+</p>
+
+<p>
+我配置时没有成功，就在 <code>.emacs</code> 文件中直接编辑的，如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(require 'org)
+(require 'org2jekyll)
+
+(custom-set-variables '(org2jekyll-blog-author "sars715")
+		      '(org2jekyll-source-directory (expand-file-name "~/org/"))
+		      '(org2jekyll-jekyll-directory (expand-file-name "~/github/sars715.github.io/"))
+		      '(org2jekyll-jekyll-drafts-dir "")
+		      '(org2jekyll-jekyll-posts-dir "_posts/")
+		      '(org-publish-project-alist
+			`(("default"
+			   :base-directory ,(org2jekyll-input-directory)
+			   :base-extension "org"
+			   :publishing-directory ,(org2jekyll-output-directory)
+			   :publishing-function org-html-publish-to-html
+			   :headline-levels 4
+			   :section-numbers nil
+			   :with-toc nil
+			   :html-head "&lt;link rel=\"stylesheet\" href=\"./css/style.css\" type=\"text/css\"/&gt;"
+			   :html-preamble t
+			   :recursive t
+			   :make-index t
+			   :html-extension "html"
+			   :body-only t)
+			  ("post"
+			   :base-directory ,(org2jekyll-input-directory)
+			   :base-extension "org"
+			   :publishing-directory ,(org2jekyll-output-directory org2jekyll-jekyll-posts-dir)
+			   :publishing-function org-html-publish-to-html
+			   :headline-levels 4
+			   :section-numbers nil
+			   :with-toc nil
+			   :html-head "&lt;link rel=\"stylesheet\" href=\"./css/style.css\" type=\"text/css\"/&gt;"
+			   :html-preamble t
+			   :recursive t
+			   :make-index t
+			   :html-extension "html"
+			   :body-only t)
+			  ("images"
+			   :base-directory ,(org2jekyll-input-directory "img")
+			   :base-extension "jpg\\|gif\\|png"
+			   :publishing-directory ,(org2jekyll-output-directory "img")
+			   :publishing-function org-publish-attachment
+			   :recursive t)
+			  ("js"
+			   :base-directory ,(org2jekyll-input-directory "js")
+			   :base-extension "js"
+			   :publishing-directory ,(org2jekyll-output-directory "js")
+			   :publishing-function org-publish-attachment
+			   :recursive t)
+			  ("css"
+			   :base-directory ,(org2jekyll-input-directory "css")
+			   :base-extension "css\\|el"
+			   :publishing-directory ,(org2jekyll-output-directory "css")
+			   :publishing-function org-publish-attachment
+			   :recursive t)
+			  ("web" :components ("images" "js" "css")))))
+</pre>
+</div>
+</div></li></ul>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">部署</h3>
+<div class="outline-text-3" id="text-orgheadline7">
+<p>
+打开一个emacs的buffer，输入 <code>M-x org2jekyll-create-draft</code> 即可按步骤创建新的post
+</p>
+
+<p>
+写好一个post后，输入 <code>M-x orgjekyll-publish</code> 即可部署该篇post
+</p>
+</div>
+</div>
+</div>
