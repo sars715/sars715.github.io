@@ -1,0 +1,116 @@
+---
+layout: post
+title: jekyll显示latex数据
+date: 2016-07-11
+categories: 
+- latex
+tags: 
+- latex
+- jekyll
+author: sars715
+excerpt: jekyll中正常显示latex内容及各种latex的语法
+---
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7">jekyll中展示latex数据</h2>
+<div class="outline-text-2" id="text-orgheadline7">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">jekyll中的配置</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+</div><ul class="org-ul"><li><a id="orgheadline1"></a>html配置<br  /><div class="outline-text-4" id="text-orgheadline1">
+<p>
+修改jekyll部署位置的header.html文件，添加如下代码
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;script type="text/x-mathjax-config"&gt;
+MathJax.Hub.Config({
+	      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)'], ['\\[', '\\]']]}
+		      });
+&lt;/script&gt;
+&lt;script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;
+&lt;/script&gt;
+</pre>
+</div>
+
+<p>
+这样就会在之后的post中自动添加mathjax的支持
+</p>
+
+<p>
+<b>注意</b>
+</p>
+
+<ol class="org-ol">
+<li>如果是在github的pages部署jekyll，mathjax网址必须是https，否则加载不了mathjax</li>
+<li>orgmode会将 <code>$$</code> 和 <code>$</code> 自动解析为 <code>\[\]</code> 和 <code>\(\)</code> 围住的latex区域，所以修改 <code>MathJax.Hub.Config</code></li>
+</ol>
+</div></li></ul>
+</div>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">latex用法</h3>
+<div class="outline-text-3" id="text-orgheadline6">
+</div><ul class="org-ul"><li><a id="orgheadline3"></a>行内用法<br  /><div class="outline-text-4" id="text-orgheadline3">
+<div class="org-src-container">
+
+<pre class="src src-latex">这是行内的公式$a=b+x$
+</pre>
+</div>
+
+<p>
+看起来是这样的
+</p>
+
+<p>
+这是行内的公式\(a=b+c\)
+</p>
+</div></li>
+
+<li><a id="orgheadline4"></a>单独一行<br  /><div class="outline-text-4" id="text-orgheadline4">
+<div class="org-src-container">
+
+<pre class="src src-latex">这是单独一行的公式$$a=b+c$$
+</pre>
+</div>
+<p>
+单独一行的公式默认是居中显示的
+看起来是这样的
+</p>
+
+<p>
+这是单独一行的公式\[a=b+c\]
+</p>
+</div></li>
+<li><a id="orgheadline5"></a>等号对齐<br  /><div class="outline-text-4" id="text-orgheadline5">
+<p>
+在编辑公式的时候经常会遇到公式的推导，这个时候的公式显示希望能按等号对齐，这样显示的就十分漂亮。
+代码如下
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex">\begin{equation*}
+\begin{aligned}
+A &amp; =(x-y)(x+y) \\
+  &amp; =x*x+x*y-y*x-y*y\\
+  &amp; = x^2 - y^2
+\end{aligned}
+\end{equation*}
+</pre>
+</div>
+
+<p>
+看起来是这样的
+</p>
+
+\begin{equation*}
+\begin{aligned}
+A & =(x-y)(x+y) \\
+  & =x*x+x*y-y*x-y*y\\
+  & = x^2 - y^2
+\end{aligned}
+\end{equation*}
+</div></li></ul>
+</div>
+</div>
